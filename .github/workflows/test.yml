@@ -43,11 +43,20 @@ jobs:
     
     # Install dependencies
     - name: Install dependencies
-      run: npm install
+      run: npm ci
       
-    # Install ESLint security plugin specifically
-    - name: Install ESLint security plugin
-      run: npm install eslint-plugin-security globals --save-dev
+    # Install ESLint and security plugin specifically
+    - name: Install ESLint and security plugin
+      run: |
+        npm install eslint eslint-plugin-security globals --save-dev
+        npx eslint --version
+        
+    # Debug: Check ESLint installation
+    - name: Debug ESLint installation
+      run: |
+        which eslint || echo "eslint not in PATH"
+        ls -la node_modules/.bin/eslint || echo "eslint binary not found"
+        chmod +x node_modules/.bin/eslint || echo "chmod failed"
       
     # Run ESLint on the tests folder
     - name: Run ESLint on tests
