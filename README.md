@@ -17,3 +17,4 @@ Stop node server.js process
 npx mocha tests/test.js
 
 node tests/SeleniumTest.mjs
+# Test GHA
