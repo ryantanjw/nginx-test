@@ -4,11 +4,16 @@
     "express": "^4.21.2"
   },
   "devDependencies": {
+    "@microsoft/eslint-formatter-sarif": "^3.1.0",
     "chai": "^5.1.2",
+    "eslint": "^9.31.0",
     "mocha": "^11.0.1",
     "selenium-webdriver": "^4.27.0"
   },
   "scripts": {
-    "test": "npx mocha tests/*.js"
+    "test": "npx mocha tests/*.js",
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix"
+
   }
 }
