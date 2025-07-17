@@ -1,0 +1,55 @@
+name: ESLint Security Test
+
+# Trigger the workflow on push and pull requests
+on:
+  push:
+    branches: [ main, master, develop ]
+  pull_request:
+    branches: [ main, master, develop ]
+
+jobs:
+  eslint-test:
+    runs-on: ubuntu-latest
+    
+    steps:
+    # Checkout the repository code
+    - name: Checkout code
+      uses: actions/checkout@v4
+      
+    # Setup Node.js environment
+    - name: Setup Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: '18'
+        cache: 'npm'
+    
+    # Install dependencies
+    - name: Install dependencies
+      run: npm install
+      
+    # Install ESLint security plugin specifically
+    - name: Install ESLint security plugin
+      run: npm install eslint-plugin-security globals --save-dev
+      
+    # Run ESLint on the tests folder
+    - name: Run ESLint on tests
+      run: npx eslint ./tests/test.js
+      continue-on-error: true  # This allows the workflow to continue even if ESLint finds issues
+      
+    # Run ESLint on entire project (optional)
+    - name: Run ESLint on entire project
+      run: npx eslint .
+      continue-on-error: true
+      
+    # Generate ESLint report (optional)
+    - name: Generate ESLint report
+      run: npx eslint . --format json --output-file eslint-report.json
+      continue-on-error: true
+      
+    # Upload ESLint report as artifact (optional)
+    - name: Upload ESLint report
+      uses: actions/upload-artifact@v4
+      if: always()
+      with:
+        name: eslint-report
+        path: eslint-report.json
