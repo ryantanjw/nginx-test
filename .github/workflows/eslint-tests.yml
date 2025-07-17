@@ -33,7 +33,7 @@ jobs:
       
     # Run ESLint on the tests folder
     - name: Run ESLint on tests
-      run: npx eslint ./tests/test.js
+      run: npx eslint ./tests/test.cjs
       continue-on-error: true  # This allows the workflow to continue even if ESLint finds issues
       
     # Run ESLint on entire project (optional)
